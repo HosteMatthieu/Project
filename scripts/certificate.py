@@ -29,12 +29,6 @@ class Certificate:
         signature = self.signature
         hash = self.hash()
         
-        # Débogage des valeurs
-        print(f"Vérification de la légitimité du certificat :")
-        print(f"Clé publique de l'émetteur : {publicKey}")
-        print(f"Signature : {signature}")
-        print(f"Hash du certificat : {hash}")
-        
         # Appel à la fonction cryptographique
         return cryptography.has_public_key_signed_this_hash(publicKey, signature, hash)
     

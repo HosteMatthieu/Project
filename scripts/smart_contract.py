@@ -21,12 +21,12 @@ class SmartContractDefinition(Certificate) :
     # Frappe le NFT
     def mint(self, ownerPublicKey, nftId):
         if self.is_minting_open() == False:
-            raise ValueError("La période de frappe est fermée.")
+            raise ValueError("La période de minage est fermée.")
         
         if len(self.owners) < self.Ntoken: #si on a pas atteint la limite
             if nftId not in self.owners: #si l'id n'existe pas
                 self.owners[nftId] = ownerPublicKey #on ajoute le NFT
-                print("NFT {} frappée par {}".format(nftId, ownerPublicKey))
+                print("NFT {} minée par {}".format(nftId, ownerPublicKey))
             else:
                 raise ValueError("NFT déjà existant")
         else:
@@ -36,11 +36,11 @@ class SmartContractDefinition(Certificate) :
     def open_minting(self, issuerPublicKey, duration):
         # On vérifie que c'est bien le propriétaire du smart contract qui essaye d'ouvrir la période de frappe
         if issuerPublicKey != self.issuerPublicKey:
-            raise ValueError("Seul le propriétaire du smart contract peut ouvrir la période de frappe")
+            raise ValueError("Seul le propriétaire du smart contract peut ouvrir la période de minage")
         
         self.mintingStart = timestamp.now() # On stocke la date de début
         self.mintingDuration = duration * 1000 # On stocke la durée en ms
-        print("Période de frappe ouverte pendant {} secondes".format(duration))
+        print("Période de minage ouverte pendant {} secondes".format(duration))
 
     # Verifie si la période de frappe est ouverte
     def is_minting_open(self):
